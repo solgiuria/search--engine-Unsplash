@@ -32,7 +32,7 @@ function App() {
   //busqueda
   const fetchImgs= async ()=>{
       setVariable(1)
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valor}&per_page=30`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30`;   
       const response= await fetch(URL);
       const data= await response.json();
        setImagenes(data.results);
@@ -45,7 +45,7 @@ function App() {
   useEffect(()=>{
     if(!valor==''){ 
       const fetchImgs= async ()=>{
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey3}&query=${valor}&per_page=30&page=${page}`;           
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30&page=${page}`;           
         const response= await fetch(URL);
         const data= await response.json();
         setImagenes((datosPrev)=>datosPrev.concat(data.results));  
@@ -62,7 +62,7 @@ function App() {
     if(valor==''){
         const fetchRandomImgs=async()=>{
           setVariable(2)
-          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey4}`;    
+          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}`;    
           const response= await fetch(urlRandom);
           const data= await response.json();
           setImagenesR((data));
@@ -77,7 +77,7 @@ function App() {
   useEffect(()=>{
     if(valor=='' || valor==null){
       const fetchRandomImgs=async()=>{
-        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey4}&page=${page}`;
+        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}&page=${page}`;
         const response= await fetch(urlRandom);
         const data= await response.json();
         setImagenesR((datosPrev)=>datosPrev.concat(data));
@@ -93,7 +93,7 @@ function App() {
     if(!valor==''){
       const fetchTags= async ()=>{
         setVariable(3)
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valorTag}&per_page=30`;   
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30`;   
         const response= await fetch(URL);
         const data= await response.json();
         setImagenesT(data.results); 
@@ -106,7 +106,7 @@ function App() {
   useEffect(()=>{
     //if(!valor==''){
       const fetchTags= async ()=>{ 
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valorTag}&per_page=30&page=${pageT}`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30&page=${pageT}`;   
        const response= await fetch(URL);
        const data= await response.json();
        setImagenesT((datosPrev)=>datosPrev.concat(data.results));
