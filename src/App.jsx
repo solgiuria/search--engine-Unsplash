@@ -7,16 +7,19 @@ function App() {
   
   const[imagenes,setImagenes]=useState([])
   const[page,setPage]=useState(1)
+
+  const[imagenesT,setImagenesT]=useState([])
   const[pageT,setPageT]=useState(1)
+
   const[imagenesR,setImagenesR]=useState([]) 
-  const[pageR,setPageR]=useState(1)  //ACLARACION: hay dos page porq sino e ejecutan ambos scrolls ya q comparten una misma variable
+  const[pageR,setPageR]=useState(1)  //ACLARACION: hay tres page porq sino e ejecutan ambos scrolls ya q comparten una misma variable
 
   const[valor,setValor]=useState('') 
   const[valorTag,setValorTag]=useState('')
 
 
-  const[variable, setVariable]=useState(true)
- 
+ // const[variable, setVariable]=useState(true)
+  const[variable, setVariable]=useState(1)
 
   let apiKey='IpEk3fjnHgpVlE45mbuHsEq2S-egyTEIKo2_SNSqilM';   
   let apiKey2='1OdZ7w-YC7c7HXK0-7ZWjWVVqwj3b7TuL2xlfTV9XEo' 
@@ -26,104 +29,105 @@ function App() {
   let apiKey6='Ae-i-ljYW8AJU5VY82ejalfiDY95tdPrEqFoQaD2xew'
 
 
-  useEffect(()=>{
-    //if(!valor==''){
-    const fetchTags= async ()=>{
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30`;   
-      const response= await fetch(URL);
-      const data= await response.json();
-       setImagenes(data.results);
-       console.log(data.results);
-       console.log('30 por tag')  
-       }
-    fetchTags();
-      //}
-  },[valorTag]) 
-
-
-  useEffect(()=>{
-    //if(!valor==''){
-    const fetchTags= async ()=>{
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30&page=${page}`;   
-      const response= await fetch(URL);
-      const data= await response.json();
-       setImagenes(data.results);
-       console.log(data.results);
-       console.log('scroll por tag')  
-       }
-    fetchTags();
-  //}
-  },[valorTag,page]) 
-
-
-
-  
-
-   const fetchImgs= async ()=>{
-      setVariable(false)
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30`;   
+  //busqueda
+  const fetchImgs= async ()=>{
+      //setVariable(false)
+      setVariable(1)
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valor}&per_page=30`;   
       const response= await fetch(URL);
       const data= await response.json();
        setImagenes(data.results);
        console.log(data.results);  
        console.log('30 de busqueda')
-       }
+  }
  
 
   
 
-
-    useEffect(()=>{
-      if(!valor==''){ 
-        const fetchImgs= async ()=>{
-          let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30&page=${page}`;    
+  //scroll busqueda
+  useEffect(()=>{
+    if(!valor==''){ 
+      const fetchImgs= async ()=>{
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valor}&per_page=30&page=${page}`;    
         
-          const response= await fetch(URL);
-          const data= await response.json();
-          setImagenes((datosPrev)=>datosPrev.concat(data.results));  
-          console.log(data.results)
-          console.log('scroll de busqueda')
-        }
-        fetchImgs()
+        const response= await fetch(URL);
+        const data= await response.json();
+        setImagenes((datosPrev)=>datosPrev.concat(data.results));  
+        //console.log(data.results)
+        console.log('scroll de busqueda')
       }
-    },[page]) 
+        fetchImgs()
+    }
+  },[page]) 
 
 
 
 
-
+  //random
   useEffect(()=>{
     if(valor==''){
         const fetchRandomImgs=async()=>{
-          setVariable(true)
-          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}`;
+          //setVariable(true)
+          setVariable(2)
+          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey2}`;
       
           const response= await fetch(urlRandom);
           const data= await response.json();
           setImagenesR((data));
-          //console.log(data)
-          //console.log('30 random')
+          console.log(data)
+          console.log('30 random')
         }
-        fetchRandomImgs();
-   }
+          fetchRandomImgs();
+    }
     
   },[valor]) 
 
 
+  //scroll random
   useEffect(()=>{
     if(valor=='' || valor==null){
-    const fetchRandomImgs=async()=>{
-      let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}&page=${page}`;
+      const fetchRandomImgs=async()=>{
+        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey2}&page=${page}`;
 
-      const response= await fetch(urlRandom);
-      const data= await response.json();
-      setImagenesR((datosPrev)=>datosPrev.concat(data));
-      //console.log('random scroll')
+        const response= await fetch(urlRandom);
+        const data= await response.json();
+        setImagenesR((datosPrev)=>datosPrev.concat(data));
+        //console.log('random scroll')
+      }
+        fetchRandomImgs();
     }
-    fetchRandomImgs();
-}
+  },[pageR])
 
-  },[valor,pageR])
+
+
+  //tags
+  useEffect(()=>{
+    if(!valor==''){
+      const fetchTags= async ()=>{
+        setVariable(3)
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valorTag}&per_page=30`;   
+        const response= await fetch(URL);
+        const data= await response.json();
+        setImagenesT(data.results);
+        console.log('30 por tag')  
+      }
+        fetchTags();
+    }
+  },[valorTag]) 
+
+  //tags scroll
+  useEffect(()=>{
+    //if(!valor==''){
+      const fetchTags= async ()=>{ 
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valorTag}&per_page=30&page=${pageT}`;   
+       const response= await fetch(URL);
+       const data= await response.json();
+       setImagenesT((datosPrev)=>datosPrev.concat(data.results));
+       console.log('scroll por tag')  
+      }
+    fetchTags();
+   //}
+  },[pageT]) 
 
 
 
@@ -144,7 +148,8 @@ function App() {
 
 
    { 
-     variable==false
+     //variable==false
+     variable==1
        &&   
         <InfiniteScroll dataLength={imagenes.length} hasMore={true} next={()=>setPage(page+1)}>  
           <div className='main-container'>
@@ -154,11 +159,32 @@ function App() {
                     <div key={index} className='img-container'>
                       <img src={img.urls.regular} alt="" />
                         <div className='text-container'>
-                            <p>Ubicacion: {img.user.location} </p>
-                            <p>Description: {img.alt_description}</p>
-                            <p>soy de busqueda</p>
+                            {
+                              img.user.location 
+                              ?
+                              (
+                                <p>Location: {img.user.location}</p>
+                              )
+                              :
+                              (
+                                <p>Location: Not found</p>
+                              )
+                            }
+
+                            {
+                              img.alt_description
+                              ?
+                              (
+                                <p>Description: {img.alt_description}</p>
+                              )
+                              :
+                              (
+                                <p>Description: Not found</p>
+                              )
+                            }
+                            <p>Camera: Not found</p>
                             <div className='cont-tags'>
-                              {img.tags.map((tag,index)=><p className='tags' key={index} onClick={()=>{setValorTag(tag.title)}}>{tag.title}</p>)}
+                              {img.tags.map((tag,index)=><a className='tags' key={index} onClick={()=>{setValorTag(tag.title)}}>{tag.title}</a>)}
                             </div>  
                         </div>
                     </div>  
@@ -174,20 +200,53 @@ function App() {
 
 
     {
-      variable==true
+      // variable==true
+      variable==2
       &&
         <InfiniteScroll dataLength={imagenesR.length} hasMore={true} next={()=>setPageR(pageR+1)}> 
           <div className='main-container'>
             {
               imagenesR.map((imgR, index)=>{ 
                 return(
-                  <div key={index} className='img-container'>
+                  <div key={index} className='img-container-R'>
                     <img src={imgR.urls.regular} alt="" />
-                    <div  className='text-container'>
-                      <p>Location: {imgR.user.location} </p>
-                      <p>Description: {imgR.alt_description} </p>
-                      <p>Camera: {imgR.exif.model} </p>
-                      <p>soy de random</p>
+                    <div  className='text-container-R'>
+                      {
+                        imgR.user.location 
+                        ?
+                        (
+                        <p>Location: {imgR.user.location}</p>
+                        )
+                        :
+                        (
+                        <p>Location: Not found</p>
+                        )
+                      }
+                            
+                      {
+                        imgR.alt_description
+                        ?
+                        (
+                        <p>Description: {imgR.alt_description}</p>
+                        )
+                        :
+                        (
+                        <p>Description: Not found</p>
+                        )
+                      }
+
+                     {
+                        imgR.exif.model
+                        ?
+                        (
+                        <p>Camera: {imgR.exif.model}</p>
+                        )
+                        :
+                        (
+                        <p>Camera: Not found</p>
+                        )
+                      }
+                      <p>Tags: Not found</p>
                     </div>
                   </div>  
                 )           
@@ -196,9 +255,57 @@ function App() {
           </div> 
         
         </InfiniteScroll>
-    }    
+    }     
 
-      
+
+    {/* esto es nuevo */}
+    {
+      variable==3
+      &&
+        <InfiniteScroll dataLength={imagenesT.length} hasMore={true} next={()=>setPageT(pageT+1)}>  
+          <div className='main-container'>
+              {
+                imagenesT.map((img, index)=>{ //esto del indice es porq cada vez q recorremos nos pide q cada elemento tenga su propia key, es decir, el id, o index.
+                  return(
+                    <div key={index} className='img-container'>
+                      <img src={img.urls.regular} alt="" />
+                        <div className='text-container'>
+                            {
+                              img.user.location 
+                              ?
+                              (
+                                <p>Location: {img.user.location}</p>
+                              )
+                              :
+                              (
+                                <p>Location: Not found</p>
+                              )
+                            }
+
+                            {
+                              img.alt_description
+                              ?
+                              (
+                                <p>Description: {img.alt_description}</p>
+                              )
+                              :
+                              (
+                                <p>Description: Not found</p>
+                              )
+                            }
+                            <p>Camera: Not found</p>
+                            <div className='cont-tags'>
+                              {img.tags.map((tag,index)=><a className='tags' key={index} onClick={()=>{setValorTag(tag.title)}}>{tag.title}</a>)}
+                            </div>  
+                        </div>
+                    </div>  
+                  )
+                  
+                })
+              }
+          </div> 
+        </InfiniteScroll>  
+    }  
              
     </>
     
