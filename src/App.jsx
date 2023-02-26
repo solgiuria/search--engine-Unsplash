@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
-//import axios from 'axios';
+import {motion} from 'framer-motion'
 
 function App() {
   
@@ -31,14 +31,11 @@ function App() {
 
   //busqueda
   const fetchImgs= async ()=>{
-      //setVariable(false)
       setVariable(1)
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valor}&per_page=30`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valor}&per_page=30`;   
       const response= await fetch(URL);
       const data= await response.json();
        setImagenes(data.results);
-       console.log(data.results);  
-       console.log('30 de busqueda')
   }
  
 
@@ -48,13 +45,10 @@ function App() {
   useEffect(()=>{
     if(!valor==''){ 
       const fetchImgs= async ()=>{
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valor}&per_page=30&page=${page}`;    
-        
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey3}&query=${valor}&per_page=30&page=${page}`;           
         const response= await fetch(URL);
         const data= await response.json();
         setImagenes((datosPrev)=>datosPrev.concat(data.results));  
-        //console.log(data.results)
-        console.log('scroll de busqueda')
       }
         fetchImgs()
     }
@@ -67,15 +61,11 @@ function App() {
   useEffect(()=>{
     if(valor==''){
         const fetchRandomImgs=async()=>{
-          //setVariable(true)
           setVariable(2)
-          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey2}`;
-      
+          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey4}`;    
           const response= await fetch(urlRandom);
           const data= await response.json();
           setImagenesR((data));
-          console.log(data)
-          console.log('30 random')
         }
           fetchRandomImgs();
     }
@@ -87,12 +77,10 @@ function App() {
   useEffect(()=>{
     if(valor=='' || valor==null){
       const fetchRandomImgs=async()=>{
-        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey2}&page=${page}`;
-
+        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey4}&page=${page}`;
         const response= await fetch(urlRandom);
         const data= await response.json();
         setImagenesR((datosPrev)=>datosPrev.concat(data));
-        //console.log('random scroll')
       }
         fetchRandomImgs();
     }
@@ -105,11 +93,10 @@ function App() {
     if(!valor==''){
       const fetchTags= async ()=>{
         setVariable(3)
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valorTag}&per_page=30`;   
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valorTag}&per_page=30`;   
         const response= await fetch(URL);
         const data= await response.json();
-        setImagenesT(data.results);
-        console.log('30 por tag')  
+        setImagenesT(data.results); 
       }
         fetchTags();
     }
@@ -119,11 +106,10 @@ function App() {
   useEffect(()=>{
     //if(!valor==''){
       const fetchTags= async ()=>{ 
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey2}&query=${valorTag}&per_page=30&page=${pageT}`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey4}&query=${valorTag}&per_page=30&page=${pageT}`;   
        const response= await fetch(URL);
        const data= await response.json();
        setImagenesT((datosPrev)=>datosPrev.concat(data.results));
-       console.log('scroll por tag')  
       }
     fetchTags();
    //}
@@ -133,7 +119,11 @@ function App() {
 
 
   return (
-    <> 
+<motion.div initial={{y:'-100px'}}
+            transition={{type:'spring', stiffness:200}}
+            animate={{y:'5px'}} 
+            > 
+
       <div className='search-cont-cont'> 
         <div className='search-container'>
           <input type="text" 
@@ -146,9 +136,7 @@ function App() {
         </div>
       </div>
 
-
-   { 
-     //variable==false
+  {    
      variable==1
        &&   
         <InfiniteScroll dataLength={imagenes.length} hasMore={true} next={()=>setPage(page+1)}>  
@@ -200,7 +188,6 @@ function App() {
 
 
     {
-      // variable==true
       variable==2
       &&
         <InfiniteScroll dataLength={imagenesR.length} hasMore={true} next={()=>setPageR(pageR+1)}> 
@@ -257,8 +244,6 @@ function App() {
         </InfiniteScroll>
     }     
 
-
-    {/* esto es nuevo */}
     {
       variable==3
       &&
@@ -307,7 +292,7 @@ function App() {
         </InfiniteScroll>  
     }  
              
-    </>
+</motion.div>
     
   )
 
