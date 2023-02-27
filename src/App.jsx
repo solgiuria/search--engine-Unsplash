@@ -17,22 +17,18 @@ function App() {
   const[valor,setValor]=useState('') 
   const[valorTag,setValorTag]=useState('')
 
-
- // const[variable, setVariable]=useState(true)
   const[variable, setVariable]=useState(1)
 
   let apiKey='IpEk3fjnHgpVlE45mbuHsEq2S-egyTEIKo2_SNSqilM';   
-  let apiKey2='1OdZ7w-YC7c7HXK0-7ZWjWVVqwj3b7TuL2xlfTV9XEo' 
-  let apiKey3='bNwIkxB5q1FB2lhT-0wlPvW8RJjYtQkWR2aDwKHZwFE'
-  let apiKey4='MHnRj--icS6lQO25gltrQlBAom7CT_VXq4mQNWf0op4'
-  let apiKey5='68pFT5WPCEO0JvrkF8i8DYvbU4DV0dk3EsM98sbbIeA'
-  let apiKey6='Ae-i-ljYW8AJU5VY82ejalfiDY95tdPrEqFoQaD2xew'
+  let apiKey2='1OdZ7w-YC7c7HXK0-7ZWjWVVqwj3b7TuL2xlfTV9XEo' ;
+  let apiKey3='bNwIkxB5q1FB2lhT-0wlPvW8RJjYtQkWR2aDwKHZwFE';
+ 
 
 
   //busqueda
   const fetchImgs= async ()=>{
       setVariable(1)
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey}&query=${valor}&per_page=30`;   
       const response= await fetch(URL);
       const data= await response.json();
        setImagenes(data.results);
@@ -45,7 +41,7 @@ function App() {
   useEffect(()=>{
     if(!valor==''){ 
       const fetchImgs= async ()=>{
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valor}&per_page=30&page=${page}`;           
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey}&query=${valor}&per_page=30&page=${page}`;           
         const response= await fetch(URL);
         const data= await response.json();
         setImagenes((datosPrev)=>datosPrev.concat(data.results));  
@@ -62,7 +58,7 @@ function App() {
     if(valor==''){
         const fetchRandomImgs=async()=>{
           setVariable(2)
-          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}`;    
+          let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey}`;    
           const response= await fetch(urlRandom);
           const data= await response.json();
           setImagenesR((data));
@@ -77,7 +73,7 @@ function App() {
   useEffect(()=>{
     if(valor=='' || valor==null){
       const fetchRandomImgs=async()=>{
-        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey5}&page=${page}`;
+        let urlRandom=`https://api.unsplash.com/photos/random?count=30&client_id=${apiKey}&page=${page}`;
         const response= await fetch(urlRandom);
         const data= await response.json();
         setImagenesR((datosPrev)=>datosPrev.concat(data));
@@ -93,7 +89,7 @@ function App() {
     if(!valor==''){
       const fetchTags= async ()=>{
         setVariable(3)
-        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30`;   
+        let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey}&query=${valorTag}&per_page=30`;   
         const response= await fetch(URL);
         const data= await response.json();
         setImagenesT(data.results); 
@@ -106,7 +102,7 @@ function App() {
   useEffect(()=>{
     //if(!valor==''){
       const fetchTags= async ()=>{ 
-       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey5}&query=${valorTag}&per_page=30&page=${pageT}`;   
+       let URL= `https://api.unsplash.com/search/photos/?client_id=${apiKey}&query=${valorTag}&per_page=30&page=${pageT}`;   
        const response= await fetch(URL);
        const data= await response.json();
        setImagenesT((datosPrev)=>datosPrev.concat(data.results));
