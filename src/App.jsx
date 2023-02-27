@@ -116,7 +116,7 @@ function App() {
 
   return (
 <motion.div initial={{y:'-100px'}}
-            transition={{type:'spring', stiffness:200}}
+            transition={{type:'spring', stiffness:250}}
             animate={{y:'5px'}} 
             > 
 
